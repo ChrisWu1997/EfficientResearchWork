@@ -31,10 +31,7 @@ Efficient research work environment setup for Computer Science and general workf
 - Mac: [iTerm2](https://iterm2.com). 按照官网安装即可。
 - Windows: 待补充。
 
-<figure class="half">
-    <img width="300" src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/terminator.jpg">
-    <img width="300" src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/iterm2.png">
-</figure>
+<img src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/terminator.jpg" height="250"/> <img src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/iterm2.png" height="250"/> 
 
 安装完毕之后不需要掌握太多的功能，一般只需要用到多窗口、分屏的功能，掌握切换窗口/分屏的快捷键即可。能用键盘的操作就别用鼠标去点！此外，背景半透明等额外特性看个人需要是否使用。
 
