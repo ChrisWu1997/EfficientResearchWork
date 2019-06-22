@@ -136,13 +136,13 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
 - 每一个实验开一个文件夹  
   在项目总目录下，每一次实验单开一个文件夹，作有意义的命名，这是为了实验的可复现和对比。  
   例如，第一次写好了一份代码并跑了一次完整的实验，该实验名为`baseline`放在项目总目录下。那么若我想把网络层数增加一倍再试试看，那么则先拷贝`baseline`的内容到一个新的文件夹`baseline_layer2x`下，然后在`baseline_layer2x`修改网络层数，之后再在该文件夹下跑新的实验。  
-  image placeholder
+  <img src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/exp-structure.jpg" width="300"/>
 - 代码和数据分离  
   一般来说，服务器上的硬盘空间会进行划分，会有很大的空间专门划分给数据存储，另外有一部分用于常规文件。因此我们应尽量将数据放在大的硬盘分区内，与代码分离。这里说的数据既包括用于训练数据，也包括训练过程中产生的数据（训练日志，模型文件）等。所以训练过程中产生的数据`train_log`需要我们的代码将他们放到硬盘的数据分区中，但为了方便访问，我们可以在实验文件夹下建立一个软连接索引到实际存放的位置：  
-  image placeholder
+  ![trainloglink](images/trainloglink.jpg)
 - 使用git进行版本控制  
   使用git进行版本控制是很好的习惯，结合PyCharm的功能，可以很方便的让我们看到代码相对于之前的commit改动了什么：  
-  image placeholder
+  ![gitpycharm](images/gitpycharm.jpg)
   
 ### Visualization
 ### Debug Trick
