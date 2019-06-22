@@ -31,7 +31,10 @@ Efficient research work environment setup for Computer Science and general workf
 - Mac: [iTerm2](https://iterm2.com). 按照官网安装即可。
 - Windows: 待补充。
 
-image placeholder
+<figure class="half">
+    <img width="300" src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/terminator.jpg">
+    <img width="300" src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/iterm2.png">
+</figure>
 
 安装完毕之后不需要掌握太多的功能，一般只需要用到多窗口、分屏的功能，掌握切换窗口/分屏的快捷键即可。能用键盘的操作就别用鼠标去点！此外，背景半透明等额外特性看个人需要是否使用。
 
@@ -49,13 +52,10 @@ Shell对于工作效率可以说是重中之重了，一个好的shell能成倍�
   5. 安装插件[git](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/git)，可选，简化git的相关操作。
 
 - **常用特性**：  
-  -  命令补全。极其强大！系统自带的bash往往只能一个一个顺序地往上恢复历史的命令，而我们配置后的zsh可以迅速地恢复任意历史命令。例如我想恢复我的上一次python命令，简单的敲几个字母`pyt`后，历史的命令就显示出来的了，在按一下方向键⬆️就恢复了：
+  -  命令补全。极其强大！系统自带的bash往往只能一个一个顺序地往上恢复历史的命令，而我们配置后的zsh可以迅速地恢复任意历史命令。例如我想恢复我的上一次python命令，简单的敲几个字母`pyt`后，历史的命令就显示出来的了，在按一下方向键⬆️就恢复了：  
+  ![autosuggestion](/images/zsh-autosuggestion.gif)
 
-  gif placeholder
-
-  - 一键解压。linux下各类的压缩文件的解压缩命令往往不同，很难记住，extract插件让我们能够通过`x`这一个字母解压几乎所有类型的压缩文件：
-
-  gif placeholder
+  - 一键解压。linux下各类的压缩文件的解压缩命令往往不同，很难记住，extract插件让我们能够通过`x`这一个字母解压几乎所有类型的压缩文件。
 
   - 各种小的命令简化。我们配置的zsh自己alias了一些命令，如`..` = `cd ..`, `l` = `ls -alh`等等。
 
@@ -67,10 +67,14 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
 
   1. **免密登录**.  
     原理是通过公私钥登录。我们先通过`ssh-keygen`生成一个rsa公私钥对：  
-    ```ssh-keygen -t rsa```  
-    这样会在`~/.ssh`文件夹下生成一个公私钥对, `id_ras`和`id_rsa.pub`（或者其他你命的名字）。接下来把公钥拷贝到服务器上：  
-    ```ssh-copy-id username@server_ip```  
-    这样配置之后再通过`ssh username@server_ip`登录就不需要输密码了。
+      ```
+      ssh-keygen -t rsa
+      ```  
+      这样会在`~/.ssh`文件夹下生成一个公私钥对, `id_ras`和`id_rsa.pub`（或者其他你命的名字）。接下来把公钥拷贝到服务器上：  
+      ```
+      ssh-copy-id username@server_ip
+      ```  
+      这样配置之后再通过`ssh username@server_ip`登录就不需要输密码了。
 
   2. **配置连接的别名**. 
     我们进一步配置`ssh`连接，通过`vim ~/.ssh/config`创建（打开）ssh的配置文件，写入： 
@@ -89,14 +93,12 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
 
   - **安装与推荐配置**：  
   1. 安装tmux，按照[这里](https://linuxize.com/post/getting-started-with-tmux/#installing-tmux)
-  2. 配置tmux。同样tmux也可以通过配置来强大其功能并美化其外观，我个人使用的是这个[.tmux](https://github.com/gpakosz/.tmux)配置，安装简介，使用方便，外观好看。
-
-  gif placeholder
+  2. 配置tmux。同样tmux也可以通过配置来强大其功能并美化其外观，我个人使用的是这个[.tmux](https://github.com/gpakosz/.tmux)配置，安装简介，使用方便，外观好看。  
+    ![ohmytmux](/images/ohmytmux.gif)
+  
 
   - **常用操作**：  
   推荐阅读这个[指南](https://linuxize.com/post/getting-started-with-tmux/#starting-your-first-tmux-session)来熟悉tmux的常用操作和概念。推荐用一个session来管理一个project，里面的每一个window(或者panel)来管理一个实验，多个实验同时用不同的window(或者panel)来跑。  
-
-  gif placeholder
 
 ### Code editor
 
