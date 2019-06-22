@@ -7,10 +7,10 @@ Efficient research work environment setup for Computer Science and general workf
   - [Shell](#Shell)
   - [Server](#Server)
     - [Connection](#Connection)
-    - tmux
+    - [tmux](#tmux)
   - [Code editor](#Code-editor)
-    - python : pycharm
-    - C/C++
+    - [python](#python) : PyCharm
+    - [C/C++](#C/C++)
   - [Cloud Storage](#Cloud-Storage)
 - Deep Learning Experiments Workflow
   - Code structure
@@ -84,7 +84,7 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
       这样我们就为`myname@111.222.333.4`建立了一个别名叫做`lab`，并且关联上了之前配置好的rsa的私钥。  
       以后只需要通过`ssh lab`即可直接登录服务器，比原来简便了很多。
 
-- **tmux**  
+- <a name="tmux"></a> **tmux**  
   [tmux](https://github.com/tmux/tmux)是一个unix-like系统下的命令行多路复用工具，可以帮助我们在命令行中同时开多个窗口，并且保证在其中跑的程序不会因为服务器连接的中断而停止，这对于长时间运行的实验（如神经网络训练）尤为重要。大多数人对tmux应该不陌生，也听过有用其他类似软件的。
 
   - **安装与推荐配置**：  
@@ -100,7 +100,7 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
 
 ### Code editor
 
-- **python**  
+- <a name="python"></a> **python**  
   强推[PyCharm](https://www.jetbrains.com/pycharm/)！！通过学校邮箱注册即可获得免费的专业版。  
 
   **常用特性**：
@@ -110,7 +110,7 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
   - 快捷键`crtl+W`（`command+W` for Mac）快速关闭当前页。
   - 在pycharm内对一个project进行git管理。[官方指南](https://www.jetbrains.com/help/pycharm/using-git-integration.html?section=Windows%20or%20Linux#Using_Git_Integration.xml)写的比较复杂。
 
-- **c/c++**  
+- <a name="C/C++"></a> **C/C++**  
   待补充。
 
 ### Cloud Storage
