@@ -14,6 +14,7 @@ Efficient research work environment setup for Computer Science and general workf
     - vim
   - [Cloud Storage](#Cloud-Storage)
 - [Deep Learning Experiments Workflow](#Deep-Learning-Experiments-Workflow)
+  - [Virtual Environment](#Virtual-Environment): Anaconda
   - [Code structure](#Code-structure)
   - [Experiment organization](#Experiment-organization)
   - [Visualization](#Visualization)
@@ -69,9 +70,9 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
       ```
       ssh-keygen -t rsa
       ```  
-      这样会在`~/.ssh`文件夹下生成一个公私钥对, `id_ras`和`id_rsa.pub`（或者其他你命的名字）。接下来把公钥拷贝到服务器上：  
+      这样会在`~/.ssh`文件夹下生成一个公私钥对, `id_rsa`和`id_rsa.pub`（或者其他你命的名字）。接下来把公钥拷贝到服务器上：  
       ```
-      ssh-copy-id username@server_ip
+      ssh-copy-id -i ~/.ssh/id_rsa.pub username@server_ip
       ```  
       这样配置之后再通过`ssh username@server_ip`登录就不需要输密码了。
 
@@ -118,7 +119,16 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
 待补充。
 
 ## Deep Learning Experiments Workflow
+> 这一部分针对有python和深度学习基础但实战经验不是很丰富的同学。  
+> 若没有深度学习基础，推荐学习斯坦福公开课[CS231n](http://cs231n.stanford.edu)。  
+> 若不熟悉深度学习框架，建议先学习一遍其官网的官方教程：[PyTorch](https://pytorch.org/tutorials/)，[TensorFlow](https://www.tensorflow.org/tutorials)，[TensorLayer](https://tensorlayer.readthedocs.io/en/latest/user/installation.html).
+> 硬件环境(nvidia-driver+CUDA+cudnn)的搭建：[yixin](http://yixina.net/doc/ubuntu.html).
+
 一个深度学习的项目往往需要进行大量的调试和对比实验，而且debug往往比较困难，所以代码和实验的组织特别重要，特别要关注可复现性、易扩展性。
+
+### Virtual Environment
+- Anaconda
+  待补充。
 
 ### Code structure
 大多数深度学习的代码可以按照以下结构划分，将各个功能分割开来（便于debug和调试）：
