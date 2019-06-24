@@ -127,7 +127,11 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
 一个深度学习的项目往往需要进行大量的调试和对比实验，而且debug往往比较困难，所以代码和实验的组织特别重要，特别要关注可复现性、易扩展性。
 
 ### Virtual Environment
+不同的项目可能需要用到不同的python环境，所以用一些虚拟环境/python包管理工具将它们相互之间隔离开来是非常有好处的。
 - Anaconda
+  [Anaconda](https://www.anaconda.com)提供了强大而方便的包管理与环境管理的功能。个人习惯于将不同深度学习框架配置到不同的环境中，如PyTorch, TensorFlow各自单独一个环境，以及为git上有些久远的python2项目单开一个python2环境，基本就能满足需求。
+  
+- virtualenv
   待补充。
 
 ### Code structure
