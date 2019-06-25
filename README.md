@@ -67,12 +67,12 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
 
   1. **免密登录**.  
     原理是通过公私钥登录。我们先通过`ssh-keygen`生成一个rsa公私钥对：  
-      ```
-      ssh-keygen -t rsa
+      ```bash
+      $ ssh-keygen -t rsa
       ```  
       这样会在`~/.ssh`文件夹下生成一个公私钥对, `id_rsa`和`id_rsa.pub`（或者其他你命的名字）。接下来把公钥拷贝到服务器上：  
-      ```
-      ssh-copy-id -i ~/.ssh/id_rsa.pub username@server_ip
+      ```bash
+      $ ssh-copy-id -i ~/.ssh/id_rsa.pub username@server_ip
       ```  
       这样配置之后再通过`ssh username@server_ip`登录就不需要输密码了。
 
@@ -159,6 +159,30 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
   ![gitpycharm](images/gitpycharm.jpg)
   
 ### Visualization
+网络训练过程中非常有必要对loss和中间结果进行可视化，[tensorboard](https://www.tensorflow.org/tensorboard)基本算是标配的工具。一键安装：
+```
+$ pip install tensorboard
+```
+TensorBoard 通过读取 TensorFlow 的事件文件（看作日志文件）来运行。TensorFlow 的事件文件包含运行 TensorFlow 时生成的总结数据。
+- 在TensorFlow中，通过`tf.summary`api生成事件文件，参见[官方文档](https://www.tensorflow.org/guide/summaries_and_tensorboard)。
+- 对于PyTorch，我们可以通过一个第三方的包[tensorboardX](https://github.com/lanpa/tensorboardX)来生成事件文件。看完其样例代码就肯定会用了。
+
+假设我们在服务器上`/dev/username/project/exp1`位置生成了一次实验的事件文件：  
+image placeholder   
+接着我们运行tensorboard读取上述事件文件：  
+```bash
+$ tensorboard --logdir /dev/username/project/exp1 --port 6006
+```
+运行后，我们可以在`localhost:6006`(即`127.0.0.1/6006`)查看可视化结果。但是由于服务器上一般没有图形化界面，我们没办法通过浏览器打开该地址。解决方法是，我们在ssh登录服务器的时候建立一个通道，将服务器端口`6006`的数据转发到一个本地端口上：
+```bash
+$ ssh -L 16006:127.0.0.1:6006 lab
+```
+参数`-L 16006:127.0.0.1:6006`建立了一个通道，将服务器端口`6006`的数据转发到了本地`16006`端口上，于是我们可以通过本地的网页浏览器访问`127.0.0.1:16006`查看可视化结果：  
+image placeholder
+
 ### Debug Trick
 
 ## Commonly used CG software
+- Blender
+- MeshLab
+- Unity
