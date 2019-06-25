@@ -19,7 +19,7 @@ Efficient research work environment setup for Computer Science and general workf
   - [Experiment organization](#Experiment-organization)
   - [Visualization](#Visualization)
   - [Debug Trick](#Debug-Trick)
-- Commonly used CG software
+- [Commonly used CG software](#Commonly-used-CG-software)
   - Blender
   - MeshLab
   - Unity
@@ -181,8 +181,12 @@ $ ssh -L 16006:127.0.0.1:6006 lab
 image placeholder
 
 ### Debug Trick
+- 模块测试代码
+- 数据供应速度
+- 分析可视化结果
+- 超参数调整
 
 ## Commonly used CG software
-- Blender
-- MeshLab
-- Unity
+- [Blender](https://www.blender.org)
+- [MeshLab](http://www.meshlab.net)
+- [Unity](https://unity.com)
