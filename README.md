@@ -181,10 +181,10 @@ $ ssh -L 16006:127.0.0.1:6006 lab
 ### Debug Trick
 - 模块测试代码  
   DL程序debug很容易让人头大，我们最好以模块化的思维去考虑问题出在哪一个模块：数据、网络结构、后处理等等。为了预防bug的产生，我们可以在按照前述代码结构，在每写好一个模块后，就可以写一个简单的测试函数，来看看代码是否产生了期望的行为。比如，关于数据处理部分`dataset.py`，简单打印一个batch的结果，看看是否符合期望：  
-  image placeholder
+  <img src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/test_func.jpg" width="600"/>
 - 数据供应速度  
   在GPU上跑程序的时候，用`nvidia-smi`查看GPU使用情况的时候，出了关注显存占用情况，还应去关注一下`Volatile GPU-Util`这一信息。一般来说，使用率越高越好；如果一直比较低，说明程序有很多时间花在了CPU上，很有可能是数据供应的速度没有跟上模型计算的速度，造成了GPU资源的浪费，程序运行速度慢。解决方法一是优化数据供应`dataset.py`部分的代码，二是增加数据供应的线程数（如pytorch里的`num_workers`），三是检查其他部分比如后处理/可视化部分代码是否可以优化。  
-  image placeholder
+  <img src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/gpu-util.jpg" width="600"/>
 - 分析可视化结果
 - 超参数调整
 
