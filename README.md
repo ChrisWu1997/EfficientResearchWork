@@ -183,10 +183,20 @@ $ ssh -L 16006:127.0.0.1:6006 lab
   DL程序debug很容易让人头大，我们最好以模块化的思维去考虑问题出在哪一个模块：数据、网络结构、后处理等等。为了预防bug的产生，我们可以在按照前述代码结构，在每写好一个模块后，就可以写一个简单的测试函数，来看看代码是否产生了期望的行为。比如，关于数据处理部分`dataset.py`，简单打印一个batch的结果，看看是否符合期望：  
   <img src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/test_func.jpg" width="600"/>
 - 数据供应速度  
-  在GPU上跑程序的时候，用`nvidia-smi`查看GPU使用情况的时候，出了关注显存占用情况，还应去关注一下`Volatile GPU-Util`这一信息。一般来说，使用率越高越好；如果一直比较低，说明程序有很多时间花在了CPU上，很有可能是数据供应的速度没有跟上模型计算的速度，造成了GPU资源的浪费，程序运行速度慢。解决方法一是优化数据供应`dataset.py`部分的代码，二是增加数据供应的线程数（如pytorch里的`num_workers`），三是检查其他部分比如后处理/可视化部分代码是否可以优化。  
+  在GPU上跑程序的时候，用`nvidia-smi`查看GPU使用情况的时候，出了关注显存占用情况，还应去关注一下`Volatile GPU-Util`这一信息。一般来说，使用率越高越好；如果一直比较低，说明程序有很多时间花在了CPU上，很有可能是数据供应的速度没有跟上模型计算的速度，造成了GPU资源的浪费，程序运行速度慢。解决方法一是优化数据供应`dataset.py`部分的代码，二是增加数据供应的线程数（如pytorch里的`num_workers`），三是检查其他部分比如后处理/可视化部分代码是否可以优化。特别地，python里尽量避免显式for循环。
   <img src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/gpu-util.jpg" width="600"/>
-- 分析可视化结果
-- 超参数调整
+- 分析可视化结果  
+  - training loss远小于validation loss，说明网络过拟合，可适当加正则项(dropout, BN, etc.)或做数据增强。
+  - training loss都降不下去，说明网络欠拟合，检查网络结构和数据处理代码。
+  - loss曲线抖动很大，常见原因是数据噪声比较大、训练任务过于困难，或者batch size开的太小，或者learning rate开的太大。
+  - 可以将多组实验的日志文件放在同一文件夹下，同时用tensorboard可视化，便于对比观察：  
+  image placeholder.
+- 经验之谈
+  - 增大batch size的同时适当增大learning rate，保持两者的平衡。原因是增大batch size之后，一个epoch内梯度下降的次数减少了，所以可以让每一步可以走得长一点(增大learning rate)。
+  - 对learning rate做动态调整，常用exponential decay或者step decay(每隔一定step减小lr)。原因是通常训练初期使lr较大加快收敛，训练后期使lr较小能够在局部收敛得更好。
+  - dropout/BatchNorm在训练/测试时的不同行为的切换。
+  - 对于回归任务，网络最后一层尽量不用非线性激活单元。
+  - ...
 
 ## Commonly used CG software
 - [Blender](https://www.blender.org)
