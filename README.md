@@ -139,6 +139,7 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
 大多数深度学习的代码可以按照以下结构划分，将各个功能分割开来（便于debug和调试）：
 - `config.py`  定义实验的超参数和全局变量，例如网络结构的超参数、learning rate、epoch数、实验/数据路径等。
 - `dataset.py`  定义数据的供应流，提供获取数据的接口给`train.py`使用，例如pytorch里的DataLoader对象。
+- `network.py`  定义模型的网络结构。
 - `agent.py`  定义一个控制训练过程的容器，提供`train.py`需要的接口，特别是训练中间过程的保存与恢复。tensorflow V1里叫做session，pytorch里需要我们自己写。
 - `train.py`  执行训练的主文件，尽量简短。
 - `evaluate.py`  执行evaluatoin/prediction的主文件，尽量简短。
