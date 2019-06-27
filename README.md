@@ -190,7 +190,7 @@ $ ssh -L 16006:127.0.0.1:6006 lab
   - training loss都降不下去，说明网络欠拟合，检查网络结构和数据处理代码。
   - loss曲线抖动很大，常见原因是数据噪声比较大、训练任务过于困难，或者batch size开的太小，或者learning rate开的太大。
   - 可以将多组实验的日志文件放在同一文件夹下，同时用tensorboard可视化，便于对比观察：  
-  image placeholder.
+    <img src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/multi_tb_log1.jpg" width="300"/> <img src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/multi_tb_log2.jpg" width="300"/> 
 - 经验之谈
   - 增大batch size的同时适当增大learning rate，保持两者的平衡。原因是增大batch size之后，一个epoch内梯度下降的次数减少了，所以可以让每一步可以走得长一点(增大learning rate)。
   - 对learning rate做动态调整，常用exponential decay或者step decay(每隔一定step减小lr)。原因是通常训练初期使lr较大加快收敛，训练后期使lr较小能够在局部收敛得更好。
