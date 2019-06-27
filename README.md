@@ -145,7 +145,7 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
 - `utils.py`  常用的工具函数和对象。
 - 其他（如`visualization`等）
 
-样例代码：[placeholder]()
+样例代码：[placeholder](/PyTorch_Template)
 
 ### Experiment organization
 - 每一个实验开一个文件夹  
@@ -197,6 +197,7 @@ $ ssh -L 16006:127.0.0.1:6006 lab
   - 对learning rate做动态调整，常用exponential decay或者step decay(每隔一定step减小lr)。原因是通常训练初期使lr较大加快收敛，训练后期使lr较小能够在局部收敛得更好。
   - dropout/BatchNorm在训练/测试时的不同行为的切换。
   - 对于回归任务，网络最后一层尽量不用非线性激活单元。
+  - BN层前的卷积层尽量不要加bias项。原因是BN层会做normalization。
   - ...
 
 ## Commonly used CG software
