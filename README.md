@@ -145,7 +145,7 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
 - `utils.py`  常用的工具函数和对象。
 - 其他（如`visualization`等）
 
-样例代码：[placeholder](/PyTorch_Template)
+样例代码：[PyTorch_Template](/PyTorch_Template)
 
 ### Experiment organization
 - 每一个实验开一个文件夹  
