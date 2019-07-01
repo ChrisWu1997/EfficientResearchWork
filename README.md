@@ -11,10 +11,10 @@ Efficient research work environment setup for Computer Science and general workf
   - [Code editor](#Code-editor)
     - [python](#python) : PyCharm
     - [C/C++](#C/C++)
-    - vim
+    - [Vim](#Vim)
   - [Cloud Storage](#Cloud-Storage)
 - [Deep Learning Experiments Workflow](#Deep-Learning-Experiments-Workflow)
-  - [Virtual Environment](#Virtual-Environment): Anaconda
+  - [Virtual Environment](#Virtual-Environment)
   - [Code structure](#Code-structure)
   - [Experiment organization](#Experiment-organization)
   - [Visualization](#Visualization)
@@ -115,6 +115,9 @@ DL的实验基本都需要在服务器上跑，所以一些针对服务器的操
 - <a name="C/C++"></a> **C/C++**  
   待补充。
 
+- <a name="Vim"></a> **Vim**  
+  - Vim的自动补全插件：[YouCompleteMe](https://github.com/ycm-core/YouCompleteMe)
+  
 ### Cloud Storage
 待补充。
 
