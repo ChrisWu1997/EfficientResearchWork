@@ -27,6 +27,7 @@ def set_requires_grad(nets, requires_grad=False):
 ##############################################################################
 class MyNetwork(nn.Module):
     def __init__(self, config):
+        super(MyNetwork, self).__init__()
         pass
 
     def forward(self, x):

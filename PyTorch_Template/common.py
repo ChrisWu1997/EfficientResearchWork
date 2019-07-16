@@ -1,10 +1,14 @@
 import os
 import utils
+import torch
 from abc import abstractmethod
 
 
-def get_config():
-    return MyConfig()
+def get_config(args):
+    config = MyConfig()
+    os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu_ids)
+    config.device = torch.device("cuda:0")
+    return config
 
 
 class Config(object):
