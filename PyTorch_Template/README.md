@@ -11,7 +11,7 @@ A general code template for deep learning experiment in PyTorch.
   A base trainer is defined for the control of training process, e.g. forward, backward, loss recording, checkpoint saving/loading. A customized trainer should be inherited from the base trainer to implement customized functionality, e.g. `forward` at least.
 - __train.py__  
   The main file to start training. Normally no need to change. 
-- __utils.py__
+- __utils.py__  
   Define some useful functions/classes. Normally no need to change.
   
 To start training, run `train.py` like
