@@ -14,18 +14,19 @@ def get_agent(config):
 
 
 class BaseAgent(object):
-    """Base trainer that provides commom training behavior.
-        All trainer should be subclass of this class.
+    """Base trainer that provides common training behavior.
+        All customized trainer should be subclass of this class.
     """
     def __init__(self, config):
         self.log_dir = config.log_dir
         self.model_dir = config.model_dir
         self.clock = TrainClock()
-        self.device = config.device
         self.batch_size = config.batch_size
 
         # build network
         self.net = self.build_net(config).cuda()
+        print('-----network architecture-----')
+        print(self.net)
 
         # set loss function
         self.set_loss_function()
@@ -54,23 +55,22 @@ class BaseAgent(object):
         """save checkpoint during training for future restore"""
         if name is None:
             save_path = os.path.join(self.model_dir, "ckpt_epoch{}.pth".format(self.clock.epoch))
+            print("Saving checkpoint epoch {}...".format(self.clock.epoch))
         else:
             save_path = os.path.join(self.model_dir, "{}.pth".format(name))
+
         if isinstance(self.net, nn.DataParallel):
-            torch.save({
-                'clock': self.clock.make_checkpoint(),
-                'model_state_dict': self.net.module.cpu().state_dict(),
-                'optimizer_state_dict': self.optimizer.state_dict(),
-                'scheduler_state_dict': self.scheduler.state_dict(),
-            }, save_path)
+            model_state_dict = self.net.module.cpu().state_dict()
         else:
-            torch.save({
-                'clock': self.clock.make_checkpoint(),
-                'model_state_dict': self.net.cpu().state_dict(),
-                'optimizer_state_dict': self.optimizer.state_dict(),
-                'scheduler_state_dict': self.scheduler.state_dict(),
-            }, save_path)
-        print("Checkpoint saved at {}".format(save_path))
+            model_state_dict = self.net.cpu().state_dict()
+
+        torch.save({
+            'clock': self.clock.make_checkpoint(),
+            'model_state_dict': model_state_dict,
+            'optimizer_state_dict': self.optimizer.state_dict(),
+            'scheduler_state_dict': self.scheduler.state_dict(),
+        }, save_path)
+
         self.net.cuda()
 
     def load_ckpt(self, name=None):
@@ -81,7 +81,7 @@ class BaseAgent(object):
             raise ValueError("Checkpoint {} not exists.".format(load_path))
 
         checkpoint = torch.load(load_path)
-        print("Checkpoint loaded from {}".format(load_path))
+        print("Loading checkpoint from {} ...".format(load_path))
         if isinstance(self.net, nn.DataParallel):
             self.net.module.load_state_dict(checkpoint['model_state_dict'])
         else:
@@ -92,7 +92,9 @@ class BaseAgent(object):
 
     @abstractmethod
     def forward(self, data):
-        pass
+        """forward logic for your network"""
+        """should return network outputs, losses(dict)"""
+        raise NotImplementedError
 
     def update_network(self, loss_dict):
         """update network by back propagation"""
@@ -107,9 +109,9 @@ class BaseAgent(object):
         self.scheduler.step(self.clock.epoch)
 
     def record_losses(self, loss_dict, mode='train'):
+        """record loss to tensorboard"""
         losses_values = {k: v.item() for k, v in loss_dict.items()}
 
-        # record loss to tensorboard
         tb = self.train_tb if mode == 'train' else self.val_tb
         for k, v in losses_values.items():
             tb.add_scalar(k, v, self.clock.step)
@@ -145,13 +147,14 @@ class MyAgent(BaseAgent):
     def build_net(self, config):
         # customize your build_net function
         # should return the built network
-        return get_network(config)
+        net = get_network(config)
+        return net
 
     def forward(self, data):
         # customize your forward function
         # should return the network outputs and losses
 
-        # input_vox3d = data['vox3d'].to(self.device)
+        # input_vox3d = data['vox3d'].cuda()
         # target_vox3d = input_vox3d.clone().detach()
 
         # output_vox3d = self.net(input_vox3d)

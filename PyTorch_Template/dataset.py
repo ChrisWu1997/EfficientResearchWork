@@ -6,21 +6,20 @@ import os
 import json
 import h5py
 
-DATA_ROOT = ""
 
-def get_dataloader(phase, batch_size=4, num_workers=4):
+def get_dataloader(phase, config):
     is_shuffle = phase == 'train'
 
-    dataset = MyDataset(phase)
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=is_shuffle, num_workers=num_workers,
+    dataset = MyDataset(phase, config.data_root)
+    dataloader = DataLoader(dataset, batch_size=config.batch_size, shuffle=is_shuffle, num_workers=config.num_workers,
                             worker_init_fn=np.random.seed())
     return dataloader
 
 
 class MyDataset(Dataset):
-    def __init__(self, phase):
+    def __init__(self, phase, data_root):
         super(MyDataset, self).__init__()
-        self.data_root = DATA_ROOT
+        self.data_root = data_root
         self.aug = phase == "train"
 
     def __getitem__(self, index):

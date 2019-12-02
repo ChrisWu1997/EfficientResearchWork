@@ -37,5 +37,6 @@ class MyNetwork(nn.Module):
 def test():
     pass
 
+
 if __name__ == '__main__':
     test()

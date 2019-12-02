@@ -8,28 +8,19 @@ from agent import get_agent
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--continue', dest='cont',  action='store_true', help="continue training from checkpoint")
-    parser.add_argument('--ckpt', type=str, default='latest', required=False, help="desired checkpoint to restore")
-    parser.add_argument('-g', '--gpu_ids', type=int, default=0, required=False, help="specify gpu ids")
-    parser.add_argument('--vis', action='store_true', default=False, help="visualize output in training")
-    args = parser.parse_args()
-
-    # create experiment config
-    config = get_config(args)
-    print(config)
+    # create experiment config containing all hyperparameters
+    config = get_config('train')
 
     # create network and training agent
     tr_agent = get_agent(config)
-    print(tr_agent.net)
 
     # load from checkpoint if provided
     if args.cont:
         tr_agent.load_ckpt(args.ckpt)
 
     # create dataloader
-    train_loader = get_dataloader('train', batch_size=config.batch_size, num_workers=config.num_workers)
-    val_loader = get_dataloader('validation', batch_size=config.batch_size, num_workers=config.num_workers)
+    train_loader = get_dataloader('train', config)
+    val_loader = get_dataloader('validation', config)
     val_loader = cycle(val_loader)
 
     # start training
@@ -43,7 +34,7 @@ def main():
             outputs, losses = tr_agent.train_func(data)
 
             # visualize
-            if args.vis and clock.step % config.visualize_frequency == 0:
+            if args.vis and clock.step % config.vis_frequency == 0:
                 pass
                 # with torch.no_grad():
                 #     tr_agent.visualize_batch(data['path'][0], train_tb)
@@ -56,7 +47,7 @@ def main():
                 data = next(val_loader)
                 outputs, losses = tr_agent.val_func(data)
 
-                if args.vis and clock.step % config.visualize_frequency == 0:
+                if args.vis and clock.step % config.vis_frequency == 0:
                     pass
                     # with torch.no_grad():
                     #     tr_agent.visualize_batch(data['path'][0], val_tb)
