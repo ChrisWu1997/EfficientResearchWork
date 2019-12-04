@@ -15,8 +15,8 @@ def main():
     tr_agent = get_agent(config)
 
     # load from checkpoint if provided
-    if args.cont:
-        tr_agent.load_ckpt(args.ckpt)
+    if config.cont:
+        tr_agent.load_ckpt(config.ckpt)
 
     # create dataloader
     train_loader = get_dataloader('train', config)
@@ -34,7 +34,7 @@ def main():
             outputs, losses = tr_agent.train_func(data)
 
             # visualize
-            if args.vis and clock.step % config.vis_frequency == 0:
+            if config.vis and clock.step % config.vis_frequency == 0:
                 pass
                 # with torch.no_grad():
                 #     tr_agent.visualize_batch(data['path'][0], train_tb)
@@ -47,7 +47,7 @@ def main():
                 data = next(val_loader)
                 outputs, losses = tr_agent.val_func(data)
 
-                if args.vis and clock.step % config.vis_frequency == 0:
+                if config.vis and clock.step % config.vis_frequency == 0:
                     pass
                     # with torch.no_grad():
                     #     tr_agent.visualize_batch(data['path'][0], val_tb)
