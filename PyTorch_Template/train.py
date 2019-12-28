@@ -35,9 +35,7 @@ def main():
 
             # visualize
             if config.vis and clock.step % config.vis_frequency == 0:
-                pass
-                # with torch.no_grad():
-                #     tr_agent.visualize_batch(data['path'][0], train_tb)
+                tr_agent.visualize_batch(data, "train", outputs=outputs)
 
             pbar.set_description("EPOCH[{}][{}]".format(e, b))
             pbar.set_postfix(OrderedDict({k: v.item() for k, v in losses.items()}))
@@ -48,9 +46,7 @@ def main():
                 outputs, losses = tr_agent.val_func(data)
 
                 if config.vis and clock.step % config.vis_frequency == 0:
-                    pass
-                    # with torch.no_grad():
-                    #     tr_agent.visualize_batch(data['path'][0], val_tb)
+                    tr_agent.visualize_batch(data, "validation", outputs=outputs)
 
             clock.tick()
 
