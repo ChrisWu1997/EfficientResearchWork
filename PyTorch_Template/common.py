@@ -2,6 +2,7 @@ import os
 from utils import ensure_dirs
 import argparse
 import json
+import shutil
 
 
 def get_config(phase):
@@ -26,6 +27,12 @@ class Config(object):
 
         # experiment paths
         self.exp_dir = os.path.join(self.proj_dir, self.exp_name)
+        if phase == "train" and args.cont is not True and os.path.exists(self.exp_dir):
+            response = input('Experiment log/model already exists, overwrite? (y/n) ')
+            if response != 'y':
+                exit()
+            shutil.rmtree(self.exp_dir)
+
         self.log_dir = os.path.join(self.exp_dir, 'log')
         self.model_dir = os.path.join(self.exp_dir, 'model')
         ensure_dirs([self.log_dir, self.model_dir])
@@ -56,10 +63,7 @@ class Config(object):
         self._add_network_config_(parser)
 
         # training or testing configuration
-        if self.is_train:
-            self._add_training_config_(parser)
-        else:
-            self._add_test_config_(parser)
+        self._add_training_config_(parser)
 
         # additional parameters if needed
         pass
@@ -99,9 +103,3 @@ class Config(object):
         group.add_argument('--save_frequency', type=int, default=100, help="save models every x epochs")
         group.add_argument('--val_frequency', type=int, default=10, help="run validation every x iterations")
         group.add_argument('--vis_frequency', type=int, default=10, help="visualize output every x iterations")
-
-    def _add_test_config_(self, parser):
-        """testing configuration"""
-        group = parser.add_argument_group('testing')
-        group.add_argument('--ckpt', type=str, default='latest', required=False, help="desired checkpoint to restore")
-        group.add_argument('-o', '--output', type=str, default='output folder to save results')
