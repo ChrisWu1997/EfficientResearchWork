@@ -32,7 +32,7 @@ Efficient research work environment setup for Computer Science and general workf
 
 - Linux: Terminator. 安装简单，例如[此处](https://blog.arturofm.com/install-terminator-terminal-emulator-in-ubuntu/)。
 - Mac: [iTerm2](https://iterm2.com). 按照官网安装即可。
-- Windows: 待补充。
+- Windows: [MobaXterm](https://mobaxterm.mobatek.net/) Win 下功能最全面，UI 最清爽的工具。
 
 <img src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/terminator.jpg" height="250"/> <img src="https://github.com/ChrisWu1997/EfficientResearchWork/blob/master/images/iterm2.png" height="250"/> 
 
