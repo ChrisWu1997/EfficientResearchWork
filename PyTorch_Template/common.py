@@ -46,8 +46,9 @@ class Config(object):
             os.symlink(self.exp_dir, 'train_log')
 
         # save this configuration
-        with open('train_log/config.txt', 'w') as f:
-            json.dump(args.__dict__, f, indent=2)
+        if self.is_train:
+            with open('train_log/config.txt', 'w') as f:
+                json.dump(args.__dict__, f, indent=2)
 
     def parse(self):
         """initiaize argument parser. Define default hyperparameters and collect from command-line arguments."""
