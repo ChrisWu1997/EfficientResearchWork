@@ -1,5 +1,5 @@
 # EfficientResearchWork
-Efficient research work environment setup for Computer Science and general workflow for Deep Learning experiments. Contribute to our lab [VCL](https://http://vcl.pku.edu.cn/index.html).
+Efficient research work environment setup for Computer Science and general workflow for Deep Learning experiments. Contribute to our lab [VCL](http://vcl.pku.edu.cn/index.html).
 
 ## Contents
 - [Work environment setup](#Work-environment-setup)
