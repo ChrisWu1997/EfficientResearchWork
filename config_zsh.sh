@@ -16,3 +16,5 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 # plugins=( 
 #     zsh-autosuggestions zsh-syntax-highlighting git extract
 # )
+
+source ~/.zshrc
