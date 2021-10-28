@@ -24,9 +24,9 @@ class BaseAgent(object):
         self.batch_size = config.batch_size
 
         # build network
-        self.net = self.build_net(config).cuda()
-        print('-----network architecture-----')
-        print(self.net)
+        self.net = self.build_net(config)
+        # print('-----network architecture-----')
+        # print(self.net)
 
         # set loss function
         self.set_loss_function()
@@ -44,12 +44,12 @@ class BaseAgent(object):
 
     def set_loss_function(self):
         """set loss function used in training"""
-        self.criterion = nn.MSELoss().cuda()
+        pass
 
     def set_optimizer(self, config):
         """set optimizer and lr scheduler used in training"""
         self.optimizer = optim.Adam(self.net.parameters(), config.lr)
-        self.scheduler = optim.lr_scheduler.StepLR(self.optimizer, config.lr_step_size)
+        self.scheduler = None # optim.lr_scheduler.StepLR(self.optimizer, config.lr_step_size)
 
     def save_ckpt(self, name=None):
         """save checkpoint during training for future restore"""
@@ -68,7 +68,7 @@ class BaseAgent(object):
             'clock': self.clock.make_checkpoint(),
             'model_state_dict': model_state_dict,
             'optimizer_state_dict': self.optimizer.state_dict(),
-            'scheduler_state_dict': self.scheduler.state_dict(),
+            'scheduler_state_dict': self.scheduler.state_dict() if self.scheduler is not None else None,
         }, save_path)
 
         self.net.cuda()
@@ -87,7 +87,8 @@ class BaseAgent(object):
         else:
             self.net.load_state_dict(checkpoint['model_state_dict'])
         self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-        self.scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+        if self.scheduler is not None:
+            self.scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
         self.clock.restore_checkpoint(checkpoint['clock'])
 
     @abstractmethod
@@ -106,7 +107,8 @@ class BaseAgent(object):
     def update_learning_rate(self):
         """record and update learning rate"""
         self.train_tb.add_scalar('learning_rate', self.optimizer.param_groups[-1]['lr'], self.clock.epoch)
-        self.scheduler.step(self.clock.epoch)
+        if self.scheduler is not None:
+            self.scheduler.step(self.clock.epoch)
 
     def record_losses(self, loss_dict, mode='train'):
         """record loss to tensorboard"""
@@ -147,7 +149,7 @@ class MyAgent(BaseAgent):
     def build_net(self, config):
         # customize your build_net function
         # should return the built network
-        net = get_network(config)
+        net = get_network(config).cuda()
         return net
 
     def forward(self, data):

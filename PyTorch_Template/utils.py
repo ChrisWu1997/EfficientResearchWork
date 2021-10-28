@@ -1,8 +1,8 @@
 import os
 import json
 import logging
-import shutil
 import csv
+
 
 class TrainClock(object):
     """ Clock object to track epoch and step during training
@@ -134,17 +134,6 @@ def ensure_dirs(paths):
             ensure_dir(path)
     else:
         ensure_dir(paths)
-
-
-def remkdir(path):
-    """
-    if dir exists, remove it and create a new one
-    :param path:
-    :return:
-    """
-    if os.path.exists(path):
-        shutil.rmtree(path)
-    os.makedirs(path)
 
 
 def cycle(iterable):

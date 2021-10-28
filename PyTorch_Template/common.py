@@ -1,8 +1,8 @@
 import os
-from utils import ensure_dirs
 import argparse
 import json
 import shutil
+from utils import ensure_dirs
 
 
 def get_config(phase):
@@ -47,8 +47,11 @@ class Config(object):
 
         # save this configuration
         if self.is_train:
-            with open('train_log/config.txt', 'w') as f:
+            with open(os.path.join(self.exp_dir, 'config.json'), 'w') as f:
                 json.dump(args.__dict__, f, indent=2)
+            copy_code_dir = os.path.join(self.exp_dir, "code")
+            ensure_dirs(copy_code_dir)
+            os.system("cp *.py {}".format(copy_code_dir))
 
     def parse(self):
         """initiaize argument parser. Define default hyperparameters and collect from command-line arguments."""
@@ -97,7 +100,6 @@ class Config(object):
         group = parser.add_argument_group('training')
         group.add_argument('--nr_epochs', type=int, default=1000, help="total number of epochs to train")
         group.add_argument('--lr', type=float, default=1e-3, help="initial learning rate")
-        group.add_argument('--lr_step_size', type=int, default=400, help="step size for learning rate decay")
         group.add_argument('--continue', dest='cont',  action='store_true', help="continue training from checkpoint")
         group.add_argument('--ckpt', type=str, default='latest', required=False, help="desired checkpoint to restore")
         group.add_argument('--vis', action='store_true', default=False, help="visualize output in training")
