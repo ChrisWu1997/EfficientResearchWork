@@ -31,8 +31,9 @@ class BaseAgent(object):
         # set loss function
         self.set_loss_function()
 
-        # set optimizer
+        # set optimizer and scheduler
         self.set_optimizer(config)
+        self.set_scheduler(config)
 
         # set tensorboard writer
         self.train_tb = SummaryWriter(os.path.join(self.log_dir, 'train.events'))
@@ -49,6 +50,8 @@ class BaseAgent(object):
     def set_optimizer(self, config):
         """set optimizer and lr scheduler used in training"""
         self.optimizer = optim.Adam(self.net.parameters(), config.lr)
+
+    def set_scheduler(self, config):
         self.scheduler = None # optim.lr_scheduler.StepLR(self.optimizer, config.lr_step_size)
 
     def save_ckpt(self, name=None):

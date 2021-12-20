@@ -1,6 +1,5 @@
 from collections import OrderedDict
 from tqdm import tqdm
-import argparse
 from dataset import get_dataloader
 from common import get_config
 from utils import cycle
@@ -26,7 +25,7 @@ def main():
     # start training
     clock = tr_agent.clock
 
-    for e in range(clock.epoch, config.nr_epochs):
+    for e in range(clock.epoch, config.n_epochs):
         # begin iteration
         pbar = tqdm(train_loader)
         for b, data in enumerate(pbar):
@@ -34,7 +33,7 @@ def main():
             outputs, losses = tr_agent.train_func(data)
 
             # visualize
-            if config.vis and clock.step % config.vis_frequency == 0:
+            if config.vis_frequency is not None and clock.step % config.vis_frequency == 0:
                 tr_agent.visualize_batch(data, "train", outputs=outputs)
 
             pbar.set_description("EPOCH[{}][{}]".format(e, b))
@@ -45,7 +44,7 @@ def main():
                 data = next(val_loader)
                 outputs, losses = tr_agent.val_func(data)
 
-                if config.vis and clock.step % config.vis_frequency == 0:
+                if config.vis_frequency is not None and clock.step % config.vis_frequency == 0:
                     tr_agent.visualize_batch(data, "validation", outputs=outputs)
 
             clock.tick()

@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import random
 
 
 def get_network(config):
